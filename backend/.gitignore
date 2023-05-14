@@ -1,0 +1,23 @@
+# Python
+**/__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyz
+*.pyw
+*.pyi
+*.ipynb_checkpoints/
+
+# Virtual environment
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# Miscellaneous
+.DS_Store
+*.log
+*.pot
+*.pyc
