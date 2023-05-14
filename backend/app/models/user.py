@@ -3,19 +3,22 @@ from passlib.hash import bcrypt
 
 
 class User:
-    def __init__(self, username, password):
-        self.username = username
+    def __init__(self, name,email, password):
+        self.name = name
+        self.email = email
         self.password = bcrypt.hash(password)
-
+        self.skills = []
+        self.bio=""
     def save(self):
         db.users_collection.insert_one({
-            'username': self.username,
+            'name': self.name,
+            'email': self.email,
             'password': self.password
         })
 
     @staticmethod
-    def find_by_username(username):
-        return db.users_collection.find_one({'username': username})
+    def find_by_email(email):
+        return db.users_collection.find_one({'email': email})
 
     @staticmethod
     def verify_password(password, hashed_password):
