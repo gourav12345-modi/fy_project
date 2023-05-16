@@ -18,7 +18,7 @@ class _MyLoginState extends State<MyLogin> {
 
   void _login() async {
     print("login called ");
-    var url = Uri.parse('http://localhost:5000/login');
+    var url = Uri.parse('http://192.168.29.1:5000/login');
     var headers = {'Content-Type': 'application/json'};
     var body = jsonEncode({
       'email': _emailController.text,
@@ -50,12 +50,12 @@ class _MyLoginState extends State<MyLogin> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Login Failed'),
+            title: const Text('Login Failed'),
             content: Text(message),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           ),
