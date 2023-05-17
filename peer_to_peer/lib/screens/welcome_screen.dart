@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:peer_to_peer/constants.dart';
-import 'package:peer_to_peer/screens/home_screen.dart';
+import 'package:peer_to_peer/screens/tab_screen.dart';
 import 'package:peer_to_peer/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 

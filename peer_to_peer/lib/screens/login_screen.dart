@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peer_to_peer/screens/register_screen.dart';
-import 'package:peer_to_peer/screens/skillscreen.dart';
+import 'package:peer_to_peer/screens/skillselection.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,13 +18,14 @@ class _MyLoginState extends State<MyLogin> {
 
   void _login() async {
     print("login called ");
-    var url = Uri.parse('http://192.168.29.1:5000/login');
+    var url = Uri.parse('http://10.0.2.2:5000/login');
     var headers = {'Content-Type': 'application/json'};
     var body = jsonEncode({
       'email': _emailController.text,
       'password': _passwordController.text,
     });
     print("making request with ");
+    print(url);
     print(body);
 
     try {
@@ -41,8 +42,8 @@ class _MyLoginState extends State<MyLogin> {
         await prefs.setString('access_token', accessToken);
 
         // Move to another screen or perform other actions
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SkillUIPage()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => SkillSelectionPage()));
       } else {
         // Login failed
         var responseData = jsonDecode(response.body);
@@ -126,10 +127,6 @@ class _MyLoginState extends State<MyLogin> {
                           const SizedBox(
                             height: 40,
                           ),
-                          ElevatedButton(
-                            onPressed: _login,
-                            child: Text('Login'),
-                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -139,6 +136,7 @@ class _MyLoginState extends State<MyLogin> {
                                     fontSize: 27, fontWeight: FontWeight.w700),
                               ),
                               GestureDetector(
+                                behavior: HitTestBehavior.opaque,
                                 onTap: _login,
                                 child: CircleAvatar(
                                   radius: 30,

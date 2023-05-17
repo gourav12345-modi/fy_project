@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import '../model/message_model.dart';
 import 'chat_screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class ChatHomeScreen extends StatelessWidget {
+  const ChatHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

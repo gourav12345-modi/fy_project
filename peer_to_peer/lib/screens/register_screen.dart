@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:peer_to_peer/screens/skillscreen.dart';
-
 import 'login_screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyRegister extends StatefulWidget {
   const MyRegister({Key? key}) : super(key: key);
@@ -11,6 +13,59 @@ class MyRegister extends StatefulWidget {
 }
 
 class _MyRegisterState extends State<MyRegister> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void _register() async {
+    print("register called.");
+    var url = Uri.parse('http://10.0.2.2:5000/register');
+    var headers = {'Content-Type': 'application/json'};
+    var body = jsonEncode({
+      "name": _nameController.text,
+      'email': _emailController.text,
+      'password': _passwordController.text,
+    });
+    print("making request with");
+    print(url);
+    print(body);
+
+    try {
+      var response = await http.post(url, headers: headers, body: body);
+      print("resolved request");
+      print(response.body);
+      print(response.statusCode);
+      if (response.statusCode == 201) {
+        // Move to login screen or perform other actions
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MyLogin()));
+      } else {
+        // register failed
+        print("register failed");
+        print(response.body);
+        print(response.statusCode);
+        var responseData = jsonDecode(response.body);
+        var message = responseData['message'];
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Login Failed'),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      // Error occurred
+      print('Error: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,6 +100,7 @@ class _MyRegisterState extends State<MyRegister> {
                       child: Column(
                         children: [
                           TextField(
+                            controller: _nameController,
                             style: const TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
@@ -69,6 +125,7 @@ class _MyRegisterState extends State<MyRegister> {
                             height: 30,
                           ),
                           TextField(
+                            controller: _emailController,
                             style: const TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
@@ -93,6 +150,7 @@ class _MyRegisterState extends State<MyRegister> {
                             height: 30,
                           ),
                           TextField(
+                            controller: _passwordController,
                             style: const TextStyle(color: Colors.white),
                             obscureText: true,
                             decoration: InputDecoration(
@@ -127,15 +185,17 @@ class _MyRegisterState extends State<MyRegister> {
                                     fontSize: 27,
                                     fontWeight: FontWeight.w700),
                               ),
-                              CircleAvatar(
-                                radius: 30,
-                                backgroundColor: const Color(0xff4c505b),
-                                child: IconButton(
+                              GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: _register,
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: const Color(0xff4c505b),
+                                  child: Icon(
+                                    Icons.arrow_forward,
                                     color: Colors.white,
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.arrow_forward,
-                                    )),
+                                  ),
+                                ),
                               )
                             ],
                           ),
@@ -147,7 +207,10 @@ class _MyRegisterState extends State<MyRegister> {
                             children: [
                               TextButton(
                                 onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyLogin()));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => MyLogin()));
                                 },
                                 style: const ButtonStyle(),
                                 child: const Text(

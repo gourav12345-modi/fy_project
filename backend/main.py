@@ -1,21 +1,9 @@
 from flask import Flask
-from flask_jwt_extended import JWTManager
-from app.controllers.auth_controller import auth_blueprint
+from app import app  # noqa
+import os
 
-
-def create_app():
-    app = Flask(__name__)
-    
-    # Set JWT secret key
-    app.config['JWT_SECRET_KEY'] = 'super-secret-key'
-    jwt = JWTManager(app)
-
-    # Register the blueprint
-    app.register_blueprint(auth_blueprint)
-
-    return app
-
+PORT = os.environ.get('PORT') or 5000
 
 if __name__ == '__main__':
-    app = create_app()
-    app.run(debug=True)
+    app.config['DEBUG'] = os.environ.get('ENV') == 'development'
+    app.run(host='0.0.0.0', port=int(PORT), debug=True)
