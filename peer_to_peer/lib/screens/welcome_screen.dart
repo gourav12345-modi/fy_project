@@ -81,7 +81,7 @@ class WelcomeScreen extends StatelessWidget {
                                   //home screen path
                                   Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => MyLogin()));},
+                                      MaterialPageRoute(builder: (context) => TabScreen()));},
                                 child: Text(
                                   "Get Started",
                                   style: TextStyle(

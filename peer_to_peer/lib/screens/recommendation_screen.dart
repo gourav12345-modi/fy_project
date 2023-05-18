@@ -10,8 +10,8 @@ class Recommendation {
 class RecommendationScreen extends StatelessWidget {
   final List<Recommendation> recommendations = [
     Recommendation('John Doe', 'Software Engineer'),
-    Recommendation('Jane Smith', 'Graphic Designer'),
-    Recommendation('Mark Johnson', 'Marketing Specialist'),
+    Recommendation('Jane Smith', 'Web Developer'),
+    Recommendation('Mark Johnson', 'Web Developer'),
   ];
 
   @override

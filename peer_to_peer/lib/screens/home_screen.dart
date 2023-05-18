@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:peer_to_peer/screens/temp.dart';
+import 'chat_home_screen.dart';
 import 'components/appbar.dart';
 import 'components/category.dart';
 import 'components/sorting.dart';
@@ -16,6 +18,9 @@ class HomeScreen extends StatefulWidget {
 
 // create a home screen
 class _HomeScreenState extends State<HomeScreen> {
+  List<String> recentChat = ["Vikash","Gourav"]; // List to hold recent chat data
+  List<Product> recentRecommendation = []; // List to hold recent recommendation data
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -76,7 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 20,
                 ),
                 //sorting
-                Sorting(),
                 const SizedBox(
                   height: 20,
                 ),
@@ -86,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      "Categories",
+                      "Recent Chat",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -100,18 +104,27 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ],
+
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: recentChat.length,
+                  itemBuilder: (context, index) {
+                    final chatItem = recentChat[index];
+                    return ListTile(
+                      title: Text(chatItem),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatHomeScreen(),
+                        ),
+                      )
+                    );
+                  },
                 ),
 
                 //now we create model of our images and colors which we will use in our app
-                const SizedBox(
-                  height: 20,
-                ),
-//we can not use gridview inside column
-//use shrinkwrap and physical scroll
-                CategoryList(),
-                const SizedBox(
-                  height: 20,
-                ),
               ],
             ),
           )

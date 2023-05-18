@@ -11,11 +11,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  String name = '';
-  String email = '';
-  String bio = '';
-  List<String> skills = [];
-  String profession = '';
+  String name = 'Gourav';
+  String email = 'gourav@gmail.com';
+  String bio = 'I am software developer';
+  List<String> skills = ["java","python"];
+  String profession = 'Software Developer';
   String profileImage = ''; // Store the URL of the profile image
   String defaultImage = 'assets/images/default_profile_image.jpg';
 
