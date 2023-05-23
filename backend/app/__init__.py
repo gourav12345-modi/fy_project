@@ -4,6 +4,7 @@ from flask_jwt_extended import JWTManager
 from .controllers.auth_controller import auth_blueprint
 from .controllers.skill_controller import skill_blueprint
 from .controllers.profile_controller import profile_bp
+from flask_socketio import SocketIO
 
 def create_app():
     app = Flask(__name__)
@@ -20,4 +21,5 @@ def create_app():
     return app
 
 app = create_app()
-socketio = SocketIO(app, cors_allowed_origins='*')
+socketio = SocketIO(app)
+# socketio = SocketIO(app, cors_allowed_origins='*')
